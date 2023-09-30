@@ -1,6 +1,14 @@
 const express = require('express');
 const app = express();
 const axios = require('axios'); 
+
+const cors = require('cors'); // Import the cors package
+
+
+// Use cors middleware to enable CORS for all routes
+app.use(cors());
+
+
 require('dotenv').config();
 
 const port = process.env.PORT; 
