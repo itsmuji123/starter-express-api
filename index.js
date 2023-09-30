@@ -1,7 +1,26 @@
-const express = require('express')
-const app = express()
-app.all('/', (req, res) => {
-    console.log("Just got a request!")
-    res.send('bla bla bla bla')
-})
-app.listen(process.env.PORT || 3000)
+const express = require('express');
+const app = express();
+const axios = require('axios'); 
+require('dotenv').config();
+
+const port = process.env.PORT; 
+
+app.get('/', (req, res) => {
+  res.send('Hello, World! This is a basic Node.js web app.');
+});
+ 
+app.get('/api/posts', async (req, res) => {
+  try {
+    const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+    const response = await axios.get(apiUrl);
+    const posts = response.data;
+    res.json(posts);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
